@@ -6,7 +6,7 @@
 /*   By: asbouani <asbouani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:25:42 by asbouani          #+#    #+#             */
-/*   Updated: 2025/03/09 17:04:31 by asbouani         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:50:05 by asbouani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	is_num(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '-' || str[i] == '+')
+	if ((str[i] == '-' || str[i] == '+') && str[i++] != '\0')
 		i++;
-	if (!str[i])
-		return (0);
+	else 
+		ft_error("Error\n");
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -56,10 +56,12 @@ int	is_duplicate(t_stack *stack, int nb)
 void	check_args(char *av, t_stack **stack_a)
 {
 	int		j;
-	int		nb;
+	long	nb;
 	char	**str;
 	t_stack	*node;
 
+	if (av[0] == '\0')
+		ft_error("Error\n");
 	str = ft_split(av, ' ');
 	if (!str)
 		return ;
@@ -68,6 +70,8 @@ void	check_args(char *av, t_stack **stack_a)
 	{
 		is_num(str[j]);
 		nb = ft_atoi(str[j]);
+		if (nb > INT_MAX || nb < INT_MIN)
+			ft_error("Error\n");
 		if (is_duplicate(*stack_a, nb))
 			ft_error("Error\n");
 		node = ft_stack_new(nb);
@@ -79,28 +83,27 @@ void	check_args(char *av, t_stack **stack_a)
 }
 
 int	main(int ac, char **av)
-{ 
+{
 	int		i;
 	t_stack	*a;
 	t_stack	*b;
 
-	i = 0;
+	i = 1;
 	a = NULL;
 	b = NULL;
 	if (ac == 1)
 		return (0);
 	while (i < ac)
+		check_args(av[i++], &a);
+	ft_index(a);
+	if (!is_sorted(a))
 	{
-		if (av[i][0] == '\0')
-			ft_error("Error\n");
-		check_args(av[i], &a);
-		i++;
+		if (stack_size(a) <= 3)
+			sort_three(&a);
+		else if (stack_size(a) <= 5)
+			sort_five(&a, &b);
+		else
+			ft_sort(&a, &b, stack_size(a));
 	}
-	if (ac == 4)
-		sort_three(&a);
-	else if (ac > 4 && ac <= 6)
-		sort_five(&a, &b);
-	else if (ac > 6)
-		ft_sort(&a, &b, stack_size(a));
-	free_stack(&a);
+	(free_stack(&a), free_stack(&b));
 }

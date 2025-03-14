@@ -6,7 +6,7 @@
 /*   By: asbouani <asbouani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:43:59 by asbouani          #+#    #+#             */
-/*   Updated: 2025/03/09 15:00:06 by asbouani         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:34:28 by asbouani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,14 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int	ft_check(long long result, int sign, int c)
-{
-	if (c >= 20 || result > 9223372036854775807)
-	{
-		if (sign == -1)
-			return (0);
-		else
-			return (-1);
-	}
-	return (sign * result);
-}
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int			i;
-	int			c;
 	int			sign;
-	long long	result;
+	long		result;
 
 	i = 0;
-	c = 0;
 	sign = 1;
 	result = 0;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
@@ -70,8 +57,6 @@ int	ft_atoi(const char *str)
 	{
 		result = (result * 10) + str[i] - 48;
 		i++;
-		if (result != 0)
-			c++;
 	}
-	return (ft_check(result, sign, c));
+	return (result  * sign);
 }

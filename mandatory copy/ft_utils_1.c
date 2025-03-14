@@ -6,7 +6,7 @@
 /*   By: asbouani <asbouani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:53:02 by asbouani          #+#    #+#             */
-/*   Updated: 2025/03/09 16:35:24 by asbouani         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:22:44 by asbouani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,25 @@ t_stack	*ft_max(t_stack *stack)
 	return (max);
 }
 
-void	ft_index(t_stack *stack, t_stack *node)
+void	ft_index(t_stack *stack)
 {
-	t_stack	*tmp;
+	t_stack	*current;
+	t_stack	*compare;
 
-	if (!stack ||!node)
+	if (!stack)
 		return ;
-	tmp = stack;
-	while (tmp)
+	current = stack;
+	while (current)
 	{
-		if (tmp->value > node->value)
-			tmp->index++;
-		else if (tmp->value < node->value)
-			node->index++;
-		tmp = tmp->next;
+		current->index = 0;
+		compare = stack;
+		while (compare)
+		{
+			if (compare->value < current->value)
+				current->index++;
+			compare = compare->next;
+		}
+		current = current->next;
 	}
 }
 

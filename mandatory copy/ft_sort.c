@@ -6,7 +6,7 @@
 /*   By: asbouani <asbouani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 18:07:34 by asbouani          #+#    #+#             */
-/*   Updated: 2025/03/09 22:08:23 by asbouani         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:37:00 by asbouani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 void	sort_three(t_stack **sa)
 {
-	if ((*sa)->value > (*sa)->next->value
+	if (stack_size(*sa) == 2)
+	{
+		if ((*sa)->value > (*sa)->next->value)
+			swap(sa, "sa\n");
+	}
+	else if ((*sa)->value > (*sa)->next->value
 		&& (*sa)->value > (*sa)->next->next->value)
 	{
 		rotate(sa, "ra\n");
@@ -79,7 +84,6 @@ int	ft_sort(t_stack **sa, t_stack **sb, int size)
 		else
 			rotate(sa, "ra\n");
 	}
-	
 	return (ft_push(sa, sb), 0);
 }
 

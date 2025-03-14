@@ -6,7 +6,7 @@
 /*   By: asbouani <asbouani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 11:04:06 by asbouani          #+#    #+#             */
-/*   Updated: 2025/03/09 15:08:59 by asbouani         ###   ########.fr       */
+/*   Updated: 2025/03/10 21:32:21 by asbouani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	rrotate(t_stack **stack, char *str)
 {
 	t_stack	*tmp;
 	t_stack	*find;
-	
-	if (!*stack ||!(*stack)->next)
+
+	if (!(*stack) || !(*stack)->next)
 		return ;
 	tmp = ft_last(*stack);
 	find = *stack;
@@ -55,4 +55,15 @@ void	rrr(t_stack **sa, t_stack **sb)
 	rrotate(sa, NULL);
 	rrotate(sb, NULL);
 	write (1, "rrr\n", 4);
+}
+
+int	is_sorted(t_stack *stack)
+{
+	while (stack && stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
 }
